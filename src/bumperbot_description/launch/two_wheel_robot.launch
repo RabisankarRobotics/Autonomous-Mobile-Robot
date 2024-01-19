@@ -1,0 +1,17 @@
+<launch>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find bumperbot_description)/urdf/rw_robot.xacro" />
+    
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+    <node name="imu_node" pkg="bumperbot_examples" type="imu_node.py">
+    </node>
+    
+    <node name="imu_filter_node_for_orientation" pkg="imu_complementary_filter" type="complementary_filter_node" >
+    </node>
+    
+    <node name="rpy_tf" pkg="bumperbot_examples" type="tf_broadcaster_imu.py">
+    </node>
+    
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find bumperbot_description)/rviz/modify_diff_robot.rviz"/>
+  </launch>
